@@ -1,0 +1,36 @@
+{
+    "name": "bevi-webdev-jm/hub-auth-client",
+    "description": "SSO client package for connecting Laravel apps to the centralized Hub via OAuth2",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^9.0|^10.0|^11.0|^12.0",
+        "laravel/socialite": "^5.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^9.0|^10.0|^11.0",
+        "mockery/mockery": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "BeviWebdevJm\\HubAuthClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BeviWebdevJm\\HubAuthClient\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BeviWebdevJm\\HubAuthClient\\HubAuthServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
