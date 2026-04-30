@@ -11,11 +11,16 @@ abstract class TestCase extends OrchestraTestCase
 {
     protected function getPackageProviders($app): array
     {
-        return [HubAuthServiceProvider::class];
+        return [
+            \Laravel\Socialite\SocialiteServiceProvider::class,
+            HubAuthServiceProvider::class,
+        ];
     }
 
     protected function getEnvironmentSetUp($app): void
     {
+        $app['config']->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
             'driver'   => 'sqlite',
@@ -41,6 +46,7 @@ abstract class TestCase extends OrchestraTestCase
             $table->string('email')->unique();
             $table->string('username')->nullable()->unique();
             $table->string('password')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

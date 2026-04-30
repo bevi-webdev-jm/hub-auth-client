@@ -20,6 +20,15 @@ class DefaultHubUserResolver implements ResolvesHubUser
             return $user;
         }
 
+        // Link an existing local account that shares the same email.
+        $user = $userModel::where('email', $hubUser->getEmail())->first();
+
+        if ($user) {
+            $user->hub_user_id = (string) $hubUser->getId();
+            $user->save();
+            return $user;
+        }
+
         $attributes = $this->buildCreateAttributes($hubUser, $userModel);
 
         $user = $userModel::create($attributes);

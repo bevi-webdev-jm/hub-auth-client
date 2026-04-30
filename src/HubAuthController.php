@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class HubAuthController extends Controller
 {
@@ -17,7 +18,11 @@ class HubAuthController extends Controller
 
     public function callback(): RedirectResponse
     {
-        $hubUser = Socialite::driver('hub')->user();
+        try {
+            $hubUser = Socialite::driver('hub')->user();
+        } catch (InvalidStateException) {
+            return redirect()->route('login');
+        }
 
         $localUser = app(ResolvesHubUser::class)->resolve($hubUser);
 

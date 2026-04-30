@@ -128,6 +128,27 @@ class HubAuthTest extends TestCase
         $this->assertEquals('77', $user->hub_user_id);
     }
 
+    public function test_resolver_links_existing_local_user_by_email(): void
+    {
+        $this->app['config']->set('auth.providers.users.model', User::class);
+
+        User::create([
+            'hub_user_id' => null,
+            'name'        => 'Pre-existing Admin',
+            'email'       => 'admin@example.com',
+            'username'    => 'admin',
+            'password'    => 'hashed',
+        ]);
+
+        $hubUser = $this->makeHubUser(id: 99, name: 'Pre-existing Admin', email: 'admin@example.com');
+
+        $resolver = new DefaultHubUserResolver();
+        $user = $resolver->resolve($hubUser);
+
+        $this->assertDatabaseCount('users', 1);
+        $this->assertEquals('99', $user->hub_user_id);
+    }
+
     // ---------------------------------------------------------------------------
     // Callback route integration (mocked Socialite)
     // ---------------------------------------------------------------------------

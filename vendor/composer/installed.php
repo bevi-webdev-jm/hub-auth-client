@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'bevi-webdev-jm/hub-auth-client',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '95696dd35d89420bbd233238b107f2de891fed97',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'bevi-webdev-jm/hub-auth-client' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '95696dd35d89420bbd233238b107f2de891fed97',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
