@@ -47,11 +47,14 @@ class DefaultHubUserResolver implements ResolvesHubUser
      */
     protected function buildCreateAttributes(SocialiteUser $hubUser, string $userModel): array
     {
+        $emailPrefix = explode('@', $hubUser->getEmail() ?? '')[0] ?? 'user';
+        $defaultPassword = \Illuminate\Support\Facades\Hash::make($emailPrefix . '123!');
+
         $attributes = [
             'hub_user_id' => (string) $hubUser->getId(),
             'name'        => $hubUser->getName(),
             'email'       => $hubUser->getEmail(),
-            'password'    => null,
+            'password'    => $defaultPassword,
         ];
 
         $instance = new $userModel();
