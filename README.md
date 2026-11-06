@@ -75,6 +75,23 @@ All options are in `config/hub-auth.php`:
 | `redirect` | `HUB_REDIRECT_URI` | — | Full callback URL of your application |
 | `default_role` | `HUB_DEFAULT_ROLE` | `default_user` | Role assigned to new users (requires Spatie Permission) |
 | `redirect_after_login` | — | `/home` | Where to redirect after successful login |
+| `report_activity` | `HUB_REPORT_ACTIVITY` | `true` | Tell the Hub who is using this app, for its online list |
+| `activity_every` | `HUB_ACTIVITY_EVERY` | `60` | Seconds between two reports of the same person (at least 30) |
+
+## Activity reporting
+
+The package adds a middleware to the `web` group that tells the Hub which
+signed-in people are using this app, so the Hub's online list can show them as
+"Online in <this app>" and count their active minutes. It runs after the
+response is sent and reports each person at most once a minute, matched on the
+Hub by email.
+
+It uses the app's own client credentials: it asks the Hub for a
+`client_credentials` token (kept until it expires) and posts to
+`/api/hub/activity`. The Hub allows this grant for any confidential client that
+signs people in with the authorization code grant, so no setup is needed on
+either side. A Hub that cannot be reached is skipped quietly and tried again on
+the next report. Set `HUB_REPORT_ACTIVITY=false` to turn it off.
 
 ## Authentication Flow
 
